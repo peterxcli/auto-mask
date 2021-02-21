@@ -1,0 +1,14 @@
+import jetson.inference
+import jetson.utils 
+import cv2
+
+
+
+net = jetson.inference.detectNet("ssd-mobilenet-v2", threshold=0.5)
+camera = jetson.utils.gstCamera(1280, 720, "dev/video1")
+display = jetson.utils.glDisplay()
+
+while display.IsOpen():
+	img, width, height = camera.CaptureRGBA()
+	class_idx, confidence = net.Classify(img)
+	class_desc = net.GetClassDesc(class_idx
